@@ -8,7 +8,7 @@ function Home() {
   const movies = [
     {
       id: 1,
-      title: "Inception",
+      title: "Inceptions",
       release_date: "2010-07-16"
     },
     {
