@@ -15,6 +15,11 @@ function Home() {
       id: 2, // Fixed: Changed from 1 to 2
       title: "The Dark Knight",
       release_date: "2008-07-18"
+    },
+     {
+      id: 3, // Fixed: Changed from 1 to 2
+      title: "Matrix",
+      release_date: "2008-07-12"
     }
   ];
 
