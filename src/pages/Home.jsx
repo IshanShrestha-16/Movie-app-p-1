@@ -1,33 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
+import { searchMovies, getPopularMovies } from "../services/api";
 import "../css/Home.css";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  const movies = [
-    {
-      id: 1,
-      title: "Inceptions",
-      release_date: "2010-07-16"
-    },
-    {
-      id: 2, // Fixed: Changed from 1 to 2
-      title: "The Dark Knight",
-      release_date: "2008-07-18"
-    },
-     {
-      id: 3, // Fixed: Changed from 1 to 2
-      title: "Matrix",
-      release_date: "2008-07-12"
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      }
+      catch (error) { 
+        console.log(error);
+        setError("Fail to load movies...");
+
+      }
+      finally { 
+        setLoading(false);
+      }
     }
-  ];
+    loadPopularMovies();
+  }, []) //[]<--dependency array is used to run the useEffect only once when the component mounts.
 
   function handleSearch(e) {
     e.preventDefault();
     // Add your search logic here
-    console.log("Searching for:", searchQuery);
-  }
+    alert(searchQuery);
+    setSearchQuery("");
+  };
 
   return (
     <div className="home">
