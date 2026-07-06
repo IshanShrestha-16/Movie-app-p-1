@@ -3,12 +3,12 @@ const BASE_URL = "https://api.themoviedb.org/3"  // base endpoint URL which send
 
 export const getPopularMovies = async () => {
     const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-    const data = response.json();
+    const data = await response.json();
     return data.results;
 }; //We will send request to the server to get popular movies by using fetch function.
 
 export const searchMovies = async (query) => {
     const response = await fetch(`${BASE_URL}/serach/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-    const data = response.json();
+    const data = await response.json();
     return data.results;
 }; //We will send request to the server to search movies by using fetch function.

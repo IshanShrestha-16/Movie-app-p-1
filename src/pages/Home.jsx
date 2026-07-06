@@ -16,12 +16,12 @@ function Home() {
         const popularMovies = await getPopularMovies();
         setMovies(popularMovies);
       }
-      catch (error) { 
-        console.log(error);
+      catch (err) {
+        console.log(err);
         setError("Fail to load movies...");
 
       }
-      finally { 
+      finally {
         setLoading(false);
       }
     }
@@ -50,13 +50,16 @@ function Home() {
         </button>
       </form>
 
-      <div className="movies-grid">
+{error && <div className="error-message">{error}</div>} 
+
+      {loading ? (<div className="loading">Loading...</div> ): (<div className="movies-grid">
         {movies.map((movie) => (
           <MovieCard movie={movie} key={movie.id} />
         ))}
       </div>
+
+      )}
     </div>
   );
 }
-
 export default Home;
