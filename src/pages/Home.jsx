@@ -28,12 +28,31 @@ function Home() {
     loadPopularMovies();
   }, []) //[]<--dependency array is used to run the useEffect only once when the component mounts.
 
-  function handleSearch(e) {
+
+
+
+  const handleSearch = async (e) => {
     e.preventDefault();
     // Add your search logic here
-    alert(searchQuery);
-    setSearchQuery("");
+
+    if (!searchQuery.trim())return;// Do not perform search if the query is empty or only whitespace
+    if (loading) return;//Prevent multiple searches while loading
+
+   setLoading(true)
+    try {
+        const searchResults = await searchMovies(searchQuery)
+        setMovies(searchResults)
+        setError(null)
+    } catch (err) {
+        console.log(err)
+        setError("Failed to search movies...")
+    } finally {
+        setLoading(false)
+    }
+
   };
+
+
 
   return (
     <div className="home">
@@ -50,9 +69,11 @@ function Home() {
         </button>
       </form>
 
-{error && <div className="error-message">{error}</div>} 
 
-      {loading ? (<div className="loading">Loading...</div> ): (<div className="movies-grid">
+
+      {error && <div className="error-message">{error}</div>}
+
+      {loading ? (<div className="loading">Loading...</div>) : (<div className="movies-grid">
         {movies.map((movie) => (
           <MovieCard movie={movie} key={movie.id} />
         ))}
@@ -62,4 +83,5 @@ function Home() {
     </div>
   );
 }
-export default Home;
+export default Home; 
+
