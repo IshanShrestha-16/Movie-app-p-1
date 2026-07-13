@@ -40,8 +40,9 @@ function Home() {
 
    setLoading(true)
     try {
+     
         const searchResults = await searchMovies(searchQuery)
-        setMovies(searchResults)
+        setMovies(searchResults || []) 
         setError(null)
     } catch (err) {
         console.log(err)
